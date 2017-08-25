@@ -100,11 +100,33 @@ class EL_Admin_New {
 					<input type="hidden" name="action" value="edited" />
 					<input type="hidden" name="id" value="'.absint($_GET['id']).'" />';
 		}
+
+		$states = array(
+			"B"	=> "Burgenland",
+			"K"	=> "Kärnten",
+			"NÖ"=> "Niederösterreich",
+			"OÖ"=> "Oberösterreich",
+			"S"	=> "Salzburg",
+			"ST"=> "Steiermark",
+			"T"	=> "Tirol",
+			"V"	=> "Vorarlberg",
+			"W"	=> "Wien",
+		);
+
+		$stateOptions = '';
+		foreach($states as $stateShortcut => $stateName) {
+			$stateOptions .= '<option '.(($event->state == $stateShortcut) ? 'selected="selected"' : '') .' value="'.$stateShortcut.'">'.$stateName.'</option>';
+		}
+
 		$out .= '
 					<table class="form-table">
 					<tr>
 						<th><label>'.__('Title','event-list').' ('.__('required','event-list').')</label></th>
 						<td><input type="text" class="text form-required" name="title" id="title" value="'.str_replace('"', '&quot;', isset($event->title) ? $event->title : '').'" /></td>
+					</tr>
+					<tr>
+						<th><label>'.__('Titel (hervorgehobener Text)','event-list').'</label></th>
+						<td><input type="text" class="text" name="important_title_text" id="important_title_text" value="'.str_replace('"', '&quot;', isset($event->important_title_text) ? $event->important_title_text : '').'" /></td>
 					</tr>
 					<tr>
 						<th><label>'.__('Date','event-list').' ('.__('required','event-list').')</label></th>
@@ -120,8 +142,20 @@ class EL_Admin_New {
 						<td><input type="text" class="text" name="time" id="time" value="'.str_replace('"', '&quot;', isset($event->time) ? $event->time : '').'" /></td>
 					</tr>
 					<tr>
+						<th><label>'.__('Bundesland','event-list').'</label></th>
+						<td>
+							<select name="state" id="state">
+								'.$stateOptions.'
+							</select>
+						</td>
+					</tr>
+					<tr>
 						<th><label>'.__('Location','event-list').'</label></th>
 						<td><input type="text" class="text" name="location" id="location" value="'.str_replace('"', '&quot;', isset($event->location) ? $event->location : '').'" /></td>
+					</tr>
+					<tr>
+						<th><label>'.__('Geschlossene Veranstaltung','event-list').'</label></th>
+						<td><input type="checkbox" class="" name="closed_event" id="closed_event" '.(isset($event->closed_event) && $event->closed_event == 1 ? 'checked="checked"' : '').' /></td>
 					</tr>
 					<tr>
 						<th><label>'.__('Details','event-list').'</label></th>

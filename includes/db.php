@@ -8,7 +8,7 @@ require_once(EL_PATH.'includes/daterange.php');
 
 // Class for database access via wordpress functions
 class EL_Db {
-	const VERSION = '0.2';
+	const VERSION = '0.3';
 	const TABLE_NAME = 'event_list';
 	private static $instance;
 	private $table;
@@ -42,8 +42,11 @@ class EL_Db {
 				end_date date DEFAULT NULL,
 				time text,
 				title text NOT NULL,
+				important_title_text text,
 				location text,
 				details text,
+				closed_event text,
+				state text,
 				categories text,
 				history text,
 				PRIMARY KEY  (id) )
@@ -117,17 +120,26 @@ class EL_Db {
 		//title
 		if( !isset( $event_data['title'] ) || $event_data['title'] === '' ) { return false; }
 		$sqldata['title'] = stripslashes( $event_data['title'] );
+		//important_title_text
+		if( !isset( $event_data['important_title_text'] ) ) { $sqldata['important_title_text'] = ''; }
+		else { $sqldata['important_title_text'] = stripslashes ($event_data['important_title_text'] ); }
 		//location
 		if( !isset( $event_data['location'] ) ) { $sqldata['location'] = ''; }
 		else { $sqldata['location'] = stripslashes ($event_data['location'] ); }
 		//details
 		if( !isset( $event_data['details'] ) ) { $sqldata['details'] = ''; }
 		else { $sqldata['details'] = stripslashes ($event_data['details'] ); }
+		// closed_event
+		if( isset( $event_data['closed_event'] ) && $event_data['closed_event'] == 'on' ) { $sqldata['closed_event'] = 1; }
+		else { $sqldata['closed_event'] = 0; }
+		// state
+		if( !isset( $event_data['state'] ) ) { $sqldata['state'] = ''; }
+		else { $sqldata['state'] = stripslashes ($event_data['state'] ); }
 		//categories
 		if( !isset( $event_data['categories'] ) || !is_array( $event_data['categories'] ) || empty( $event_data['categories'] ) ) { $sqldata['categories'] = ''; }
 		else { $sqldata['categories'] = '|'.implode( '|', $event_data['categories'] ).'|'; }
 		//types for sql data
-		$sqltypes = array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' );
+		$sqltypes = array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' );
 		if(isset( $event_data['id'] ) ) { // update event
 			return $wpdb->update($this->table, $sqldata, array('id' => $event_data['id']), $sqltypes);
 		}
