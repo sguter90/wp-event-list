@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Event List
-Plugin URI: http://wordpress.org/extend/plugins/event-list/
+Plugin URI: https://github.com/sguter90/wp-event-list
 Description: Manage your events and show them in a list view on your site.
-Version: 0.7.9
-Author: mibuthu
-Author URI: http://wordpress.org/extend/plugins/event-list/
+Version: 100.0
+Author: Christoph Mueller
+Author URI: https://github.com/sguter90
 Text Domain: event-list
 License: GPLv2
 

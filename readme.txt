@@ -5,7 +5,7 @@ Tags: event, events, list, listview, calendar, schedule, shortcode, page, catego
 Requires at least: 3.8
 Tested up to: 4.8
 Stable tag: 0.7.9
-Plugin URI: http://wordpress.org/extend/plugins/event-list
+Plugin URI: https://github.com/sguter90/wp-event-list
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
