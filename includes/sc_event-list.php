@@ -30,6 +30,7 @@ class SC_Event_List {
 		$this->options = &EL_Options::get_instance();
 		$this->db = &EL_Db::get_instance();
 		$this->categories = &EL_Categories::get_instance();
+		$this->locale = new WP_Locale();
 
 		// All available attributes
 		$this->atts = array(
@@ -173,12 +174,96 @@ class SC_Event_List {
 		else {
 			// print available events
 			$out .= '
-				<ul class="event-list-view">';
+				<div class="event-list">';
 			$single_day_only = $this->is_single_day_only($events);
+			$out .= '<table class="event-list-view">';
+			
+			$lastEventClosed = 1;
 			foreach ($events as $event) {
-				$out .= $this->html_event($event, $a, $single_day_only);
-			}
-			$out .= '</ul>';
+				$year  = substr($event->start_date, 0, 4); 																	
+				$month = substr($event->start_date, 5, 2); 
+				$currentMonth = $year . '-' . $month;
+
+				$closedEventClass = '';
+				if(!empty($event->closed_event)) {
+					$closedEventClass .= ' closed-event';
+				}
+
+				if($lastMonth != $currentMonth) {
+					$out .= '
+						<tr>
+							<td colspan="2">
+								<div class="event-category-header">' .
+									strtoupper($this->locale->get_month($month)) . ' ' . $year . '
+								</div>
+							</td>
+						</tr>
+					';
+				}
+
+				if($lastEventClosed == 1 && $event->closed_event == 1) {
+					$out .= '
+						<tr class="closed-event-seperator">
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+					';
+				}
+
+				$out .= '
+					<tr class="event ' . $closedEventClass . '">
+						<td>
+							<span class="event-date">' . mysql2date( 'D, d.m.', $event->start_date) . '</span><br />
+							<span class="event-time">' . $event->time . '</span>
+						</td>
+						<td>
+							<span class="event-title">
+								<span class="event-real-title">' . $event->title . '</span>';
+
+				if(!empty($event->state)) {
+					$out .= ', <span class="event-state">' . $event->state . '</span>';
+				}
+				
+				if(!empty($event->important_title_text)) {
+					$out .= ' - <span class="event-important-title-text">' . $event->important_title_text . '</span>';
+				}
+
+				$out .= '
+							</span>
+							<div class="event-info">
+				';
+
+				if(!empty($event->location)) {
+					$out .= '
+								<span class="event-location">' . $event->location . '</span>
+					';
+				}
+
+				if(!empty($event->details)) {
+					$out .= '
+								<span class="event-details">' . $event->details . '</span>
+					';
+				}
+
+				if(!empty($event->closed_event)) {
+					$out .= '
+								<span class="event-is-closed">geschlossene Veranstaltung</span>
+					';
+				}
+
+				$out .= '
+							</div>
+						</td>
+					</tr>
+				';
+
+				$lastMonth			= $currentMonth;
+				$lastEventClosed 	= $event->closed_event;
+
+
+			} // end foreach events
+
+			$out .= '</table></div>';
 		}
 		$out .= $this->html_feed_link($a, 'bottom');
 		return $out;
@@ -275,10 +360,7 @@ class SC_Event_List {
 	}
 
 	private function html_date( $date ) {
-		$out = '<div class="event-weekday">'.mysql2date( 'D', $date ).'</div>';
-		$out .= '<div class="event-day">'.mysql2date( 'd', $date ).'</div>';
-		$out .= '<div class="event-month">'.mysql2date( 'M', $date ).'</div>';
-		$out .= '<div class="event-year">'.mysql2date( 'Y', $date ).'</div>';
+		$out = '<span class="event-date">' . mysql2date( 'D, d.m.', $date) . '</span>';
 		return $out;
 	}
 
