@@ -121,18 +121,10 @@ class EL_Admin_New {
 		$out .= '
 					<table class="form-table">
 					<tr>
-						<th><label>'.__('Title','event-list').' ('.__('required','event-list').')</label></th>
-						<td><input type="text" class="text form-required" name="title" id="title" value="'.str_replace('"', '&quot;', isset($event->title) ? $event->title : '').'" /></td>
-					</tr>
-					<tr>
-						<th><label>'.__('Titel (hervorgehobener Text)','event-list').'</label></th>
-						<td><input type="text" class="text" name="important_title_text" id="important_title_text" value="'.str_replace('"', '&quot;', isset($event->important_title_text) ? $event->important_title_text : '').'" /></td>
-					</tr>
-					<tr>
 						<th><label>'.__('Date','event-list').' ('.__('required','event-list').')</label></th>
 						<td><span class="date-wrapper"><input type="text" class="text form-required" name="start_date" id="start_date" value="'.date('Y-m-d', $start_date).'" /><i class="dashicons dashicons-calendar-alt"></i></span>
 							<span id="end_date_area"> - <span class="date-wrapper"><input type="text" class="text" name="end_date" id="end_date" value="'.date('Y-m-d', $end_date).'" /><i class="dashicons dashicons-calendar-alt"></i></span></span>
-							<label><input type="checkbox" name="multiday" id="multiday" value="1" /> '.__('Multi-Day Event','event-list').'</label>
+							<label style="display: none"><input type="checkbox" name="multiday" id="multiday" value="1" /> '.__('Multi-Day Event','event-list').'</label>
 							<input type="hidden" id="sql_start_date" name="sql_start_date" value="" />
 							<input type="hidden" id="sql_end_date" name="sql_end_date" value="" />
 						</td>
@@ -140,6 +132,14 @@ class EL_Admin_New {
 					<tr>
 						<th><label>'.__('Time','event-list').'</label></th>
 						<td><input type="text" class="text" name="time" id="time" value="'.str_replace('"', '&quot;', isset($event->time) ? $event->time : '').'" /></td>
+					</tr>
+					<tr>
+						<th><label>'.__('Title','event-list').' ('.__('required','event-list').')</label></th>
+						<td><input type="text" class="text form-required" name="title" id="title" value="'.str_replace('"', '&quot;', isset($event->title) ? $event->title : '').'" /></td>
+					</tr>
+					<tr>
+						<th><label>'.__('Titel (hervorgehobener Text)','event-list').'</label></th>
+						<td><input type="text" class="text" name="important_title_text" id="important_title_text" value="'.str_replace('"', '&quot;', isset($event->important_title_text) ? $event->important_title_text : '').'" /></td>
 					</tr>
 					<tr>
 						<th><label>'.__('Bundesland','event-list').'</label></th>
