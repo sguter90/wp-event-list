@@ -194,7 +194,7 @@ class SC_Event_List {
 						<tr>
 							<td colspan="2">
 								<div class="event-category-header">' .
-									strtoupper($this->locale->get_month($month)) . ' ' . $year . '
+									mb_strtoupper($this->locale->get_month($month), 'UTF-8') . ' ' . $year . '
 								</div>
 							</td>
 						</tr>
