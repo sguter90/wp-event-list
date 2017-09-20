@@ -43,6 +43,7 @@ class EL_Db {
 				time text,
 				title text NOT NULL,
 				important_title_text text,
+				special_text text,
 				location text,
 				details text,
 				closed_event text,
@@ -123,6 +124,9 @@ class EL_Db {
 		//important_title_text
 		if( !isset( $event_data['important_title_text'] ) ) { $sqldata['important_title_text'] = ''; }
 		else { $sqldata['important_title_text'] = stripslashes ($event_data['important_title_text'] ); }
+		//special_text
+		if( !isset( $event_data['special_text'] ) ) { $sqldata['special_text'] = ''; }
+		else { $sqldata['special_text'] = stripslashes ($event_data['special_text'] ); }
 		//location
 		if( !isset( $event_data['location'] ) ) { $sqldata['location'] = ''; }
 		else { $sqldata['location'] = stripslashes ($event_data['location'] ); }

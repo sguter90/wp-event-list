@@ -200,7 +200,7 @@ class SC_Event_List {
 						</tr>
 					';
 				}
-
+/*
 				if($lastEventClosed == 1 && $event->closed_event == 1) {
 					$out .= '
 						<tr class="closed-event-seperator">
@@ -209,7 +209,7 @@ class SC_Event_List {
 						</tr>
 					';
 				}
-
+*/
 				$out .= '
 					<tr class="event ' . $closedEventClass . '">
 						<td>
@@ -232,6 +232,10 @@ class SC_Event_List {
 							</span>
 							<div class="event-info">
 				';
+
+				if(!empty($event->special_text)) {
+					$out .= '<span class="event-special-text">' . $event->special_text . '</span>';
+				}
 
 				if(!empty($event->location)) {
 					$out .= '

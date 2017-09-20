@@ -142,6 +142,10 @@ class EL_Admin_New {
 						<td><input type="text" class="text" name="important_title_text" id="important_title_text" value="'.str_replace('"', '&quot;', isset($event->important_title_text) ? $event->important_title_text : '').'" /></td>
 					</tr>
 					<tr>
+						<th><label>'.__('Special','event-list').'</label></th>
+						<td><input type="text" class="text" name="special_text" id="special_text" value="'.str_replace('"', '&quot;', isset($event->special_text) ? $event->special_text : '').'" /></td>
+					</tr>
+					<tr>
 						<th><label>'.__('Bundesland','event-list').'</label></th>
 						<td>
 							<select name="state" id="state">
